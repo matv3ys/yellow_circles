@@ -1,15 +1,31 @@
 import sys
 import random
-from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QPainter, QColor
 import numpy as np
 
 
-class MyWidget(QWidget):
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(800, 600)
+        self.pshb = QtWidgets.QPushButton(Form)
+        self.pshb.setGeometry(QtCore.QRect(370, 280, 93, 28))
+        self.pshb.setObjectName("pshb")
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.pshb.setText(_translate("Form", "Окружность"))
+
+
+class MyWidget(QtWidgets.QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.q = 0
         self.pshb.clicked.connect(self.run)
 
@@ -32,8 +48,11 @@ class MyWidget(QWidget):
     def random_color(self):
         return tuple(np.random.choice(range(256), size=3))
 
+    def random_color(self):
+        return tuple(np.random.choice(range(256), size=3))
 
-app = QApplication(sys.argv)
+
+app = QtWidgets.QApplication(sys.argv)
 ex = MyWidget()
 ex.show()
 sys.exit(app.exec_())
