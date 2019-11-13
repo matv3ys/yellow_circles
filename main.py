@@ -1,8 +1,9 @@
 import sys
 import random
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtGui import QPainter, QColor
+import numpy as np
 
 
 class MyWidget(QWidget):
@@ -23,9 +24,13 @@ class MyWidget(QWidget):
             r = random.randint(20, 100)
             qp = QPainter()
             qp.begin(self)
-            qp.setBrush(QColor('yellow'))
+            a, b, c = self.random_color()
+            qp.setBrush(QColor(a, b, c))
             qp.drawEllipse(x, y, r, r)
             qp.end()
+
+    def random_color(self):
+        return tuple(np.random.choice(range(256), size=3))
 
 
 app = QApplication(sys.argv)
